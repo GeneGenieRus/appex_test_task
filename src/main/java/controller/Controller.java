@@ -1,35 +1,50 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
-import repository.NoteRepo;
-
-import java.util.List;
+import service.Service;
 
 @org.springframework.stereotype.Controller
 public class Controller {
 
+    public Controller() {
+    }
+
     @Autowired
-    NoteRepo noteRepo;
+    private Service service;
 
-    public void create (Note note){
-        noteRepo.save(note);
+
+    public void create(ActionEvent actionEvent) {
     }
 
-    public void delete(int id){
-        noteRepo.deleteById(id);
-    }
 
-    public void update(Note note){
-        noteRepo.save(note);
-    }
 
-    public Note get(int id){
-        return noteRepo.getOne(id);
-    }
+    @FXML
+    private TableView<Note> noteList;
 
-    public List<Note> getAll(){
-        return noteRepo.findAll();
-    }
+    @FXML
+    private TableColumn<Note, Integer> idColumn;
 
+    @FXML
+    private TableColumn<Note, String> descriptionColumn;
+
+    @FXML
+    private TableColumn<Note, String> dateTimeColumn;
+
+    @FXML
+    private void initialize() {
+
+        idColumn.setCellValueFactory(new PropertyValueFactory<Note, Integer>("id"));
+
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<Note, String>("description"));
+        dateTimeColumn.setCellValueFactory(new PropertyValueFactory<Note, String>("dateTime"));
+
+        noteList.setItems(FXCollections.observableArrayList(service.getAll()));
+    }
 }
