@@ -7,10 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import project.service.Service;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 
 public class Main extends Application {
@@ -30,11 +28,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
-        System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
-
-        Service service = appCtx.getBean(Service.class);
-        System.out.println(Arrays.toString(service.getAll().toArray()));
-
         launch(args);
     }
 }

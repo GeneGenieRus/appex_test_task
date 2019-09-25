@@ -18,18 +18,19 @@ import javafx.stage.Stage;
 import project.Main;
 import project.model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
-import project.service.Service;
+import project.repository.NoteRepo;
+import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 
-@org.springframework.stereotype.Controller
-public class Controller {
+@Controller
+public class MainForm {
 
-    public Controller() {
+    public MainForm() {
     }
 
     @Autowired
-    private Service service;
+    private NoteRepo noteRepo;
 
 
     public void create(ActionEvent actionEvent) throws IOException {
@@ -84,6 +85,6 @@ public class Controller {
             return cell;
         });
 
-        noteList.setItems(FXCollections.observableArrayList(service.getAll()));
+        noteList.setItems(FXCollections.observableArrayList(noteRepo.findAll()));
     }
 }

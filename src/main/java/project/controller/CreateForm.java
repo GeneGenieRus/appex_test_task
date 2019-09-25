@@ -11,24 +11,24 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import project.Main;
 import project.model.Note;
-import project.service.Service;
+import project.repository.NoteRepo;
 
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-@Component
+@Controller
 public class CreateForm implements Initializable {
 
     private final int MAX_LENGTH = 100;
     @Autowired
-    private Service service;
+    private NoteRepo noteRepo;
 
     @Autowired
-    private Controller controller;
+    private MainForm mainForm;
 
     @FXML
     private Button cancelButton;
@@ -53,10 +53,11 @@ public class CreateForm implements Initializable {
 
             LocalDateTime noteDateTime = LocalDateTime.parse(dateTime.getText(), Main.FORMATTER);
 
-            service.save(new Note(noteDescritption, noteDateTime));
+            noteRepo.save(new Note(noteDescritption, noteDateTime));
+
             Stage stage = (Stage) saveButton.getScene().getWindow();
             stage.close();
-            controller.reloadTable();
+            mainForm.reloadTable();
         } catch (Exception e) {
             errorLabel.setText("Check input params. " + e.getLocalizedMessage());
             errorLabel.setVisible(true);
