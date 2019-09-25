@@ -19,11 +19,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainView.fxml"));
-        loader.setControllerFactory(appCtx::getBean);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainForm.fxml"));
+        loader.setControllerFactory(appCtx::getBean);  //inject spring beans
         Parent root = loader.load();
-        Scene scene = new Scene(root, 1000, 600);
-        primaryStage.setTitle("Company");
+        Scene scene = new Scene(root);
+        primaryStage.setTitle("Note List");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

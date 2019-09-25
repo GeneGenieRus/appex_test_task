@@ -7,8 +7,8 @@
 
 <AnchorPane prefHeight="460.0" prefWidth="646.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.controller.Controller">
    <children>
-      <Button layoutX="526.0" layoutY="398.0" mnemonicParsing="false" onAction="#create" text="Button" />
-      <TableView fx:id="noteList" layoutX="14.0" layoutY="14.0" prefHeight="256.0" prefWidth="592.0">
+      <Button layoutX="526.0" layoutY="398.0" mnemonicParsing="false" onAction="#create" text="Create note" />
+      <TableView fx:id="noteList" layoutX="14.0" layoutY="14.0" prefHeight="370.0" prefWidth="592.0">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="111.0" text="id" />
           <TableColumn fx:id="descriptionColumn" prefWidth="247.0" text="descritpion" />

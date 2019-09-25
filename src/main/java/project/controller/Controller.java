@@ -7,9 +7,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import project.Main;
@@ -33,7 +36,7 @@ public class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/createForm.fxml"));
         loader.setControllerFactory(Main.appCtx::getBean);
         Parent root = loader.load();
-        Scene scene = new Scene(root, 1000, 600);
+        Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setTitle("Create new note");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -41,7 +44,7 @@ public class Controller {
         stage.show();
     }
 
-    public void reloadTable(){
+    public void reloadTable() {
         initialize();
     }
 
@@ -63,10 +66,22 @@ public class Controller {
         idColumn.setCellValueFactory(new PropertyValueFactory<Note, Integer>("id"));
 
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Note, String>("description"));
+
         dateTimeColumn.setCellValueFactory(cellData -> {
             SimpleStringProperty simpleStringProperty = new SimpleStringProperty();
             simpleStringProperty.setValue(cellData.getValue().getDateTime().format(Main.FORMATTER));
             return simpleStringProperty;
+        });
+
+        //wrap text by column https://stackoverflow.com/questions/22732013/javafx-tablecolumn-text-wrapping
+        descriptionColumn.setCellFactory(tc -> {
+            TableCell<Note, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(descriptionColumn.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell;
         });
 
         noteList.setItems(FXCollections.observableArrayList(service.getAll()));

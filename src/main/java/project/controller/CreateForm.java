@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class CreateForm implements Initializable {
     private Button saveButton;
 
     @FXML
-    private TextField description;
+    private TextArea description;
 
     @FXML
     private TextField dateTime;
@@ -48,6 +49,7 @@ public class CreateForm implements Initializable {
         controller.reloadTable();
     }
 
+    //close window
     public void Cancel(ActionEvent actionEvent) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
@@ -58,6 +60,7 @@ public class CreateForm implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         dateTime.setText(LocalDateTime.now().format(Main.FORMATTER));
 
+        //limit size of textfield https://stackoverflow.com/questions/16538849/how-to-use-javafx-textfield-maxlength
         description.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
