@@ -1,23 +1,25 @@
-import controller.Controller;
+package project;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import service.Service;
+import project.service.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 
 public class Main extends Application {
-    static ConfigurableApplicationContext appCtx;
+    public static ConfigurableApplicationContext appCtx;
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/mainView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainView.fxml"));
         loader.setControllerFactory(appCtx::getBean);
         Parent root = loader.load();
         Scene scene = new Scene(root, 1000, 600);

@@ -1,8 +1,8 @@
-package service;
+package project.service;
 
-import model.Note;
+import project.model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
-import repository.NoteRepo;
+import project.repository.NoteRepo;
 
 import java.util.List;
 
@@ -11,16 +11,12 @@ public class Service {
     @Autowired
     NoteRepo noteRepo;
 
-    public void create (Note note){
+    public void save (Note note){
         noteRepo.save(note);
     }
 
     public void delete(int id){
         noteRepo.deleteById(id);
-    }
-
-    public void update(Note note){
-        noteRepo.save(note);
     }
 
     public Note get(int id){

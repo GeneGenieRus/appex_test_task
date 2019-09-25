@@ -29,7 +29,7 @@
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource"
-          p:packagesToScan="model">
+          p:packagesToScan="project.model">
 
         <property name="jpaPropertyMap">
             <map>
@@ -52,8 +52,8 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
 
-    <context:component-scan base-package="repository"/>
-    <jpa:repositories base-package="repository"/>
+    <context:component-scan base-package="project.repository"/>
+    <jpa:repositories base-package="project.repository"/>
 
 
 </beans>
