@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -41,12 +42,26 @@ public class CreateForm implements Initializable {
     @FXML
     private TextField dateTime;
 
+    @FXML
+    private Label errorLabel;
+
     public void Save(ActionEvent actionEvent) {
-        Note note = new Note(description.getText(), LocalDateTime.parse(dateTime.getText(), Main.FORMATTER));
-        service.save(note);
-        Stage stage = (Stage) saveButton.getScene().getWindow();
-        stage.close();
-        controller.reloadTable();
+        try {
+            String noteDescritption = description.getText();
+            if (noteDescritption.isEmpty())
+                throw new Exception("description can not be empty");
+
+            LocalDateTime noteDateTime = LocalDateTime.parse(dateTime.getText(), Main.FORMATTER);
+
+            service.save(new Note(noteDescritption, noteDateTime));
+            Stage stage = (Stage) saveButton.getScene().getWindow();
+            stage.close();
+            controller.reloadTable();
+        } catch (Exception e) {
+            errorLabel.setText("Check input params. " + e.getLocalizedMessage());
+            errorLabel.setVisible(true);
+        }
+
     }
 
     //close window
@@ -64,7 +79,7 @@ public class CreateForm implements Initializable {
         description.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.length() > MAX_LENGTH){
+                if (newValue.length() > MAX_LENGTH) {
                     description.setText(oldValue);
                 }
             }
